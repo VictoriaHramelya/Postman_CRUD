@@ -1,0 +1,556 @@
+{
+	"info": {
+		"_postman_id": "e89f8004-66c4-4b9b-b0c9-6358cab15b93",
+		"name": "Positive_CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22141421"
+	},
+	"item": [
+		{
+			"name": "Create new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Create new user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"NEW_USERNAME\"), function (err, res) {\r",
+							"        pm.expect(err).to.not.be.ok;\r",
+							"        pm.expect(res).to.have.property('code', 200);\r",
+							"        pm.expect(res).to.have.property('status', 'OK');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"NEW_ID\", _.random(1, 9223372036854775807))\r",
+							"\r",
+							"let userName = pm.variables.replaceIn('{{$randomUserName}}');\r",
+							"pm.environment.set(\"NEW_USERNAME\", userName);\r",
+							"\r",
+							"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+							"pm.environment.set(\"NEW_FIRSTNAME\", firstName);\r",
+							"\r",
+							"let lastName = pm.variables.replaceIn('{{$randomLastName}}');\r",
+							"pm.environment.set(\"NEW_LASTNAME\", lastName);\r",
+							"\r",
+							"let email = pm.variables.replaceIn('{{$randomEmail}}');\r",
+							"pm.environment.set(\"NEW_EMAIL\", email);\r",
+							"\r",
+							"let password = pm.variables.replaceIn('{{$randomPassword}}');\r",
+							"pm.environment.set(\"NEW_PASSWORD\", password);\r",
+							"\r",
+							"let phone = pm.variables.replaceIn('{{$randomPhoneNumberExt}}');\r",
+							"pm.environment.set(\"NEW_PHONE\", phone);\r",
+							"\r",
+							"let status = pm.variables.replaceIn('{{$randomInt}}');\r",
+							"pm.environment.set(\"NEW_USERSTATUS\", status);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{NEW_ID}}\",\r\n  \"username\": \"{{NEW_USERNAME}}\",\r\n  \"firstName\": \"{{NEW_FIRSTNAME}}\",\r\n  \"lastName\": \"{{NEW_LASTNAME}}\",\r\n  \"email\": \"{{NEW_EMAIL}}\",\r\n  \"password\": \"{{NEW_PASSWORD}}\",\r\n  \"phone\": \"{{NEW_PHONE}}\",\r\n  \"userStatus\": \"{{NEW_USERSTATUS}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}v2/user",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the user with existing username Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}v2/user/{{NEW_USERNAME}}",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user",
+						"{{NEW_USERNAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new user with the maximum value of the 'id' field Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let userName = pm.variables.replaceIn('{{$randomUserName}}');\r",
+							"pm.environment.set(\"USERNAME_2\", userName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Create new user with the maximum value of the 'id' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"USERNAME_2\"), function (err, res) {\r",
+							"        pm.expect(err).to.not.be.ok;\r",
+							"        pm.expect(res).to.have.property('code', 200);\r",
+							"        pm.expect(res).to.have.property('status', 'OK');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{MAX_ID}}\",\r\n  \"username\": \"{{USERNAME_2}}\",\r\n  \"firstName\": \"{{NEW_FIRSTNAME}}\",\r\n  \"lastName\": \"{{NEW_LASTNAME}}\",\r\n  \"email\": \"{{NEW_EMAIL}}\",\r\n  \"password\": \"{{NEW_PASSWORD}}\",\r\n  \"phone\": \"{{NEW_PHONE}}\",\r\n  \"userStatus\": \"{{NEW_USERSTATUS}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}v2/user",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new user with maximum 'userStatus' Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Create new user with maximum 'userStatus\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"USERNAME_TRASH\"), function (err, res) {\r",
+							"    pm.test('Get new user with maximum userStatus' , function() {\r",
+							"        pm.expect(res).to.have.property('code', 200);\r",
+							"    })\r",
+							"    pm.test('Get new user with maximum userStatus', function(){\r",
+							"        pm.expect(res).to.have.property('status', 'OK');\r",
+							"\r",
+							"    })\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{NEW_ID}}\",\r\n  \"username\": \"{{USERNAME_TRASH}}\",\r\n  \"firstName\": \"{{NEW_FIRSTNAME}}\",\r\n  \"lastName\": \"{{NEW_LASTNAME}}\",\r\n  \"email\": \"{{NEW_EMAIL}}\",\r\n  \"password\": \"{{NEW_PASSWORD}}\",\r\n  \"phone\": \"{{NEW_PHONE}}\",\r\n  \"userStatus\": \"{{MAX_USERSTATUS}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}v2/user",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update all data of an existing user Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Update all data of an existing user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"NEW_USERNAME\"), function (err, res) {\r",
+							"    pm.test('Get all new data of an existing user' , function() {\r",
+							"        pm.expect(res).to.have.property('code', 200);\r",
+							"    })\r",
+							"    pm.test('Get all new data of an existing user', function(){\r",
+							"        pm.expect(res).to.have.property('status', 'OK');\r",
+							"\r",
+							"    })\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{NEW_ID}}\",\r\n  \"username\": \"{{NEW_USERNAME}}\",\r\n  \"firstName\": \"{{NEW_FIRSTNAME}}\",\r\n  \"lastName\": \"{{NEW_LASTNAME}}\",\r\n  \"email\": \"{{NEW_EMAIL}}\",\r\n  \"password\": \"{{NEW_PASSWORD}}\",\r\n  \"phone\": \"{{NEW_PHONE}}\",\r\n  \"userStatus\": \"{{NEW_USERSTATUS}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}v2/user/{{NEW_USERNAME}}",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user",
+						"{{NEW_USERNAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the user with non-existent username Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Update the user with non-existent username\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"{NEW_USERNAME\"), function (err, res) {\r",
+							"    pm.test('Get the user with non-existent username' , function() {\r",
+							"        pm.expect(res).to.have.property('code', 404);\r",
+							"    })\r",
+							"    pm.test('Get the user with non-existent username', function(){\r",
+							"        pm.expect(res).to.have.property('status', 'Not Found');\r",
+							"\r",
+							"    })\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{NEW_ID}}\",\r\n  \"username\": \"{{NEW_USERNAME}}\",\r\n  \"firstName\": \"{{NEW_FIRSTNAME}}\",\r\n  \"lastName\": \"{{NEW_LASTNAME}}\",\r\n  \"email\": \"{{NEW_EMAIL}}\",\r\n  \"password\": \"{{NEW_PASSWORD}}\",\r\n  \"phone\": \"{{NEW_PHONE}}\",\r\n  \"userStatus\": \"{{NEW_USERSTATUS}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}v2/user/{{NEW_USERNAME}}",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user",
+						"{{NEW_USERNAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the user with using maximum value of the 'id' field Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Update the user with using maximum value of the 'id' field\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"USERNAME_2\"), function (err, res) {\r",
+							"    pm.test('Get the user with using maximum value of the id field' , function() {\r",
+							"        pm.expect(res).to.have.property('code', 200);\r",
+							"    })\r",
+							"    pm.test('Get the user with using maximum value of the id field', function(){\r",
+							"        pm.expect(res).to.have.property('status', 'OK');\r",
+							"\r",
+							"    })\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{MAX_ID}}\",\r\n  \"username\": \"{{USERNAME_2}}\",\r\n  \"firstName\": \"{{NEW_FIRSTNAME}}\",\r\n  \"lastName\": \"{{NEW_LASTNAME}}\",\r\n  \"email\": \"{{NEW_EMAIL}}\",\r\n  \"password\": \"{{NEW_PASSWORD}}\",\r\n  \"phone\": \"{{NEW_PHONE}}\",\r\n  \"userStatus\": \"{{NEW_USERSTATUS}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}v2/user/{{USERNAME_2}}",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user",
+						"{{USERNAME_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the user using maximum 'userStatus' Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Update the user using maximum 'userStatus'\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"USERNAME_2\"), function (err, res) {\r",
+							"    pm.test('Get the user using maximum userStatus' , function() {\r",
+							"        pm.expect(res).to.have.property('code', 200);\r",
+							"    })\r",
+							"    pm.test('Get the user using maximum userStatus', function(){\r",
+							"        pm.expect(res).to.have.property('status', 'OK');\r",
+							"\r",
+							"    })\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{NEW_ID}}\",\r\n  \"username\": \"{{USERNAME_2}}\",\r\n  \"firstName\": \"{{NEW_FIRSTNAME}}\",\r\n  \"lastName\": \"{{NEW_LASTNAME}}\",\r\n  \"email\": \"{{NEW_EMAIL}}\",\r\n  \"password\": \"{{NEW_PASSWORD}}\",\r\n  \"phone\": \"{{NEW_PHONE}}\",\r\n  \"userStatus\": \"{{MAX_USERSTATUS}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}v2/user/{{USERNAME_2}}",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user",
+						"{{USERNAME_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user with existing username Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"NEW_USERNAME\"), function (err, res) {\r",
+							"    pm.test('Get the user that was deleted' , function() {\r",
+							"        pm.expect(res).to.have.property('code', 404);\r",
+							"    })\r",
+							"    pm.test('Get the user that was deleted', function(){\r",
+							"        pm.expect(res).to.have.property('status', 'Not Found');\r",
+							"\r",
+							"    })\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}v2/user/{{NEW_USERNAME}}",
+					"host": [
+						"{{BASE_URL}}v2"
+					],
+					"path": [
+						"user",
+						"{{NEW_USERNAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleted user with a non-existent username Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// UIID\r",
+							"pm.sendRequest(pm.environment.get(\"BASE_URL\") + 'v2/user/' + pm.environment.get(\"USERNAME_TRASH\"), function (err, res) {\r",
+							"    pm.test('Get the user that was deleted' , function() {\r",
+							"        pm.expect(res).to.have.property('code', 404);\r",
+							"    })\r",
+							"    pm.test('Get the user that was deleted', function(){\r",
+							"        pm.expect(res).to.have.property('status', 'Not Found');\r",
+							"\r",
+							"    })\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{NEW_USERNAME}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{NEW_USERNAME}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
