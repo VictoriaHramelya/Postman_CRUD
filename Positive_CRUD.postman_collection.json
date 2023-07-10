@@ -436,7 +436,26 @@
 							"\r",
 							"    })\r",
 							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Message should exist, not be null, be a number and be above zero\", function () {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.code).to.eql(200);\r",
+							"    pm.expect(data).to.have.property('message');\r",
+							"    pm.expect(data.message).not.eql(null);\r",
+							"    pm.expect(data.message).to.be.a('string');\r",
+							"\r",
+							"\r",
 							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
 						],
 						"type": "text/javascript"
 					}
